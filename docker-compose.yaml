@@ -1,0 +1,43 @@
+version: "3"
+name: ecommerce-project
+services:
+  mongo:
+    container_name: mongo-db
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: ecommerce-db
+      DB_NAME: email-service
+      DB_USER: admin
+      DB_PASSWORD: password
+    networks:
+      - ecommerce-network
+    volumes:
+      - mongo:/data/db
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+    networks:
+      - ecommerce-network
+    depends_on:
+      - mongo
+      
+networks:
+  ecommerce-network:
+    driver: bridge
+volumes:
+  mongo:
