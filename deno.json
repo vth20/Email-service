@@ -20,6 +20,8 @@
     "yup": "npm:yup@^1.2.0",
     "deps": "./deps.ts",
     "logger": "./src/middlewares/logger/index.ts",
-    "router": "./src/routes/index.ts"
+    "router": "./src/routes/index.ts",
+    "db": "./src/database/index.ts",
+    "enum": "/.src/constants/enum.ts"
   }
 }
