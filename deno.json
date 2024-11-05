@@ -23,6 +23,8 @@
     "router": "./src/routes/index.ts",
     "db": "./src/database/index.ts",
     "enum": "./src/constants/enum.ts",
-    "roles": "./src/config/roles.ts"
+    "roles": "./src/config/roles.ts",
+    "apiResponse": "./src/utils/api/response.ts",
+    "types": "./src/types/index.ts"
   }
 }

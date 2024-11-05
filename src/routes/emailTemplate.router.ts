@@ -5,10 +5,22 @@ import { PermissionList } from "roles";
 const router = new Router();
 
 router.prefix("/api/v1/email-template");
+router.get("/", EmailTemplateController.getAll);
+router.get("/:id", EmailTemplateController.getById);
 router.post(
   "/",
   auth([PermissionList.CREATE_EMAIL_TEMPLATE]),
   EmailTemplateController.create
+);
+router.post(
+  "/:id",
+  auth([PermissionList.UPDATE_EMAIL_TEMPLATE]),
+  EmailTemplateController.update
+);
+router.delete(
+  "/:id",
+  auth([PermissionList.DELETE_EMAIL_TEMPLATE]),
+  EmailTemplateController.delete
 );
 
 export default router;

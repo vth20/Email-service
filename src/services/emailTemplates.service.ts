@@ -6,6 +6,47 @@ import {
 
 class EmailTemplateService {
   /**
+   * Retrieves a paginated list of email templates based on a search query.
+   *
+   * @param {string} search - The search term to filter email templates by. Filters by template name, subject, body, or description.
+   * @param {number} page - The current page of results to retrieve (1-based index).
+   * @param {number} limit - The maximum number of email templates to return per page.
+   * @returns {Promise<EmailTemplateSchema[]>} A promise that resolves to an array of matching email templates.
+   */
+  public static async getEmailTemplates(
+    search: string,
+    page: number,
+    limit: number
+  ): Promise<EmailTemplateSchema[]> {
+    const skip = (page - 1) * limit;
+
+    const query = search
+      ? {
+          $or: [
+            { templateName: { $regex: search, $options: "i" } },
+            { subject: { $regex: search, $options: "i" } },
+            { body: { $regex: search, $options: "i" } },
+            { description: { $regex: search, $options: "i" } },
+          ],
+        }
+      : {};
+
+    return await EmailTemplates.find(query).skip(skip).limit(limit).toArray();
+  }
+
+  /**
+   * Retrieves an email template by its ID.
+   *
+   * @param {string} id - The ID of the email template to retrieve.
+   * @returns {Promise<EmailTemplateSchema | undefined>} A promise that resolves to the found email template schema or undefined if not found.
+   */
+  public static getEmailTemplateById(
+    id: string
+  ): Promise<EmailTemplateSchema | undefined> {
+    return EmailTemplates.findOne({ _id: new Bson.ObjectId(id) });
+  }
+
+  /**
    * Creates a new email template in the database.
    *
    * @param {EmailTemplateSchema} payload - The data to be inserted as a new email template.
@@ -36,12 +77,12 @@ class EmailTemplateService {
    */
   public static async updateEmailTemplate(
     payload: Partial<EmailTemplateSchema>
-  ): Promise<string | Bson.ObjectId> {
+  ): Promise<Partial<EmailTemplateSchema>> {
     if (!payload._id) {
       throw new Error("Template ID must be provided for update.");
     }
 
-    const result = await EmailTemplates.updateOne(
+    await EmailTemplates.updateOne(
       { _id: new Bson.ObjectId(payload._id) },
       {
         $set: {
@@ -54,11 +95,22 @@ class EmailTemplateService {
       }
     );
 
-    if (result.modifiedCount === 0) {
-      throw new Error("No template was updated. Please check the template ID.");
-    }
+    return payload;
+  }
 
-    return payload._id;
+  /**
+   * Deletes an email template by its unique identifier.
+   *
+   * @async
+   * @function deleteEmailTemplate
+   * @param   {string} id - The unique identifier of the email template to delete.
+   * @returns {Promise<number>} - Returns a promise that resolves to the number of documents deleted (1 if successful, 0 if not found).
+   *
+   * @example
+   * const result = await deleteEmailTemplate("64bcf8f87e1a4eaa11122233");
+   */
+  public static async deleteEmailTemplate(id: string): Promise<number> {
+    return await EmailTemplates.deleteOne({ _id: new Bson.ObjectId(id) });
   }
 }
 

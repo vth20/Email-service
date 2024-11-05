@@ -12,4 +12,4 @@ export { oakCors } from "cors/mod.ts";
 export { getLogger, handlers, setup } from "log/mod.ts";
 export type { CreateIndexOptions } from "mongo/mod.ts";
 export { Bson, MongoClient } from "mongo/mod.ts";
-export type { RouterContext, RouterMiddleware, State } from "oak/mod.ts";
+export type { RouterContext, Response, RouterMiddleware, State } from "oak/mod.ts";
