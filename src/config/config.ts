@@ -38,7 +38,7 @@ const config: {
   url: `${Deno.env.get("PROTOCOL") as unknown as string}://${
     Deno.env.get("HOST") as unknown as string
   }:${Deno.env.get("PORT") as unknown as number}`,
-  mongoUrl: Deno.env.get("MONGO_DB_URL") as unknown as string,
+  mongoUrl: Deno.env.get("MONGO_URI") as unknown as string,
 };
 console.log(config)
 export default config;

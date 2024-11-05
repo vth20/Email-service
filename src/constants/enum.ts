@@ -47,3 +47,25 @@ export enum SendLogStatus {
    */
   CANCELLED = "CANCELLED",
 }
+
+export enum EmailTemplateType {
+  /**
+   * Email verify new email after sign up
+   */
+  VERIFY_EMAIL = "VERIFY_EMAIL",
+
+  /**
+   * Email welcome new user
+   */
+  WELCOME_EMAIL = "WELCOME_EMAIL",
+
+  /**
+   * Email reset password
+   */
+  PASSWORD_RESET = "PASSWORD_RESET",
+
+  /**
+   * Email news
+   */
+  NEWSLETTER = "NEWS_LETTER",
+}

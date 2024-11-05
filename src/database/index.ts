@@ -29,7 +29,7 @@ class Database {
     const client: MongoClient = new MongoClient();
     await client.connect(this.url);
     this.client = client;
-    log.info('Database connected!');
+    log.info("Database connected!");
   }
 
   /**

@@ -3,7 +3,7 @@ import db from "db";
 export interface EmailPlaceholderSchema {
   _id?: string;
   templateId: string;
-  placeholderIds: Array<string>; // List of metadata_placeholder._id references
+  placeholderId: string;
   updatedAt?: Date;
   updatedBy?: string;
 }

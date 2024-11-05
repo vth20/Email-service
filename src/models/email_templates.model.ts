@@ -2,12 +2,12 @@ import db from "db";
 
 export interface EmailTemplateSchema {
   _id?: string;
-  retryMax: number;
   templateType: string;
   templateName: string;
   description?: string;
   subject?: string;
   body?: string;
+  retryMax: number;
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
