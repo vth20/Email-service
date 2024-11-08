@@ -3,6 +3,7 @@ import {
   EmailTemplates,
   EmailTemplateSchema,
 } from "../models/email_templates.model.ts";
+import EmailPlaceholderService from "./emailPlaceholders.service.ts";
 
 class EmailTemplateService {
   /**
@@ -110,6 +111,7 @@ class EmailTemplateService {
    * const result = await deleteEmailTemplate("64bcf8f87e1a4eaa11122233");
    */
   public static async deleteEmailTemplate(id: string): Promise<number> {
+    EmailPlaceholderService.deleteEmailPlaceholderByTemplateIds([id]);
     return await EmailTemplates.deleteOne({ _id: new Bson.ObjectId(id) });
   }
 }

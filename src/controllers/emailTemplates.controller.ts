@@ -1,9 +1,8 @@
-import type { RouterContext, Bson } from "deps";
-import EmailTemplateService from "../services/emailTemplates.service.ts";
-import { Status } from "deps";
 import apiResponse from "apiResponse";
+import type { RouterContext } from "deps";
+import { Status } from "deps";
 import log from "logger";
-import type { IPagination } from "types";
+import EmailTemplateService from "../services/emailTemplates.service.ts";
 
 class EmailTemplateController {
   public static async getAll({ request, response }: RouterContext<string>) {

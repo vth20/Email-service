@@ -4,7 +4,7 @@ import { auth } from "../middlewares/auth.middleware.ts";
 import { PermissionList } from "roles";
 const router = new Router();
 
-router.prefix("/api/v1/email-template");
+router.prefix("/api/v1/email-templates");
 router.get("/", EmailTemplateController.getAll);
 router.get("/:id", EmailTemplateController.getById);
 router.post(

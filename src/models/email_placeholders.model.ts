@@ -4,9 +4,9 @@ export interface EmailPlaceholderSchema {
   _id?: string;
   templateId: string;
   placeholderId: string;
-  updatedAt?: Date;
-  updatedBy?: string;
+  createdAt?: Date;
+  createdBy?: string;
 }
 
-export const EmailTemplates =
+export const EmailPlaceholders =
   db.getDatabase.collection<EmailPlaceholderSchema>("email_placeholders");

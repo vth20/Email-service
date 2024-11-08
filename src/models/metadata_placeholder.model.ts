@@ -2,6 +2,7 @@ import db from "db";
 
 export interface MetadataPlaceholderSchema {
   _id?: string;
+  key: string;
   name: string;
   description: string;
   createdAt?: Date;
@@ -10,5 +11,5 @@ export interface MetadataPlaceholderSchema {
   updatedBy?: string;
 }
 
-export const EmailTemplates =
+export const MetadataPlaceholder =
   db.getDatabase.collection<MetadataPlaceholderSchema>("metadata_placeholder");
