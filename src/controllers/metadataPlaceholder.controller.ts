@@ -23,7 +23,7 @@ class MetadataPlaceholderController {
       page,
       limit
     );
-    apiResponse.success(response, null, result, Status.OK);
+    return apiResponse.success(response, null, result, Status.OK);
   }
 
   /**
@@ -40,7 +40,7 @@ class MetadataPlaceholderController {
       id
     );
     console.log(result);
-    apiResponse.success(response, null, { ...result }, Status.OK);
+    return apiResponse.success(response, null, { ...result }, Status.OK);
   }
 
   /**
@@ -65,7 +65,12 @@ class MetadataPlaceholderController {
         createdAt: new Date(),
       });
     log.info("Created new Metadata placeholder");
-    apiResponse.success(response, null, { _id: newEmailTemplate }, Status.OK);
+    return apiResponse.success(
+      response,
+      null,
+      { _id: newEmailTemplate },
+      Status.OK
+    );
   }
 
   /**
@@ -93,7 +98,12 @@ class MetadataPlaceholderController {
         updatedAt: new Date(),
       });
     log.info(`Update Metadata placeholder id: ${_id}`);
-    apiResponse.success(response, null, emailTemplateUpdated, Status.Created);
+    return apiResponse.success(
+      response,
+      null,
+      emailTemplateUpdated,
+      Status.Created
+    );
   }
 
   /**
@@ -114,7 +124,7 @@ class MetadataPlaceholderController {
     log.info(`Deleted Metadata placeholder with id: ${id}`);
 
     // Sends a success response with the deleted ID
-    apiResponse.success(response, null, { id }, Status.OK);
+    return apiResponse.success(response, null, { id }, Status.OK);
   }
 }
 

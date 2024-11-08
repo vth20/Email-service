@@ -4,7 +4,6 @@ export interface EmailSendLogSchema {
   _id?: string;
   emailMessageId: string;
   logType: string;
-  sendStatus: string;
   sentAt: Date;
   retryScheduledAt?: Date;
   retryCount: number;

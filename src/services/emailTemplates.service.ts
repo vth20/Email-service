@@ -14,7 +14,7 @@ class EmailTemplateService {
    * @param {number} limit - The maximum number of email templates to return per page.
    * @returns {Promise<EmailTemplateSchema[]>} A promise that resolves to an array of matching email templates.
    */
-  public static async getEmailTemplates(
+  public static getEmailTemplates(
     search: string,
     page: number,
     limit: number
@@ -32,7 +32,7 @@ class EmailTemplateService {
         }
       : {};
 
-    return await EmailTemplates.find(query).skip(skip).limit(limit).toArray();
+    return EmailTemplates.find(query).skip(skip).limit(limit).toArray();
   }
 
   /**
@@ -110,9 +110,9 @@ class EmailTemplateService {
    * @example
    * const result = await deleteEmailTemplate("64bcf8f87e1a4eaa11122233");
    */
-  public static async deleteEmailTemplate(id: string): Promise<number> {
+  public static deleteEmailTemplate(id: string): Promise<number> {
     EmailPlaceholderService.deleteEmailPlaceholderByTemplateIds([id]);
-    return await EmailTemplates.deleteOne({ _id: new Bson.ObjectId(id) });
+    return EmailTemplates.deleteOne({ _id: new Bson.ObjectId(id) });
   }
 }
 

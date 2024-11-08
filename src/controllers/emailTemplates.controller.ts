@@ -5,7 +5,19 @@ import log from "logger";
 import EmailTemplateService from "../services/emailTemplates.service.ts";
 
 class EmailTemplateController {
-  public static async getAll({ request, response }: RouterContext<string>) {
+  /**
+   * Retrieves a paginated list of email templates, optionally filtered by a search term.
+   *
+   * This method extracts `search`, `page`, and `limit` parameters from the request URL,
+   * applies the search term if provided, and paginates the results based on the `page`
+   * and `limit` values.
+   *
+   * @param {RouterContext<string>} context - The context object containing `request` and `response`.
+   * @param {URLSearchParams} context.request.url.searchParams - The search parameters from the request URL.
+   * @param {Response} context.response - The response object for sending data back to the client.
+   * @returns {Promise<void>} - A Promise that sends a JSON response with paginated results and status 200.
+   */
+  public static async getAll({ request, response }: RouterContext<string>): Promise<void> {
     const search = request.url.searchParams.get("search") || "";
     const page = Number(request.url.searchParams.get("page")) || 1;
     const limit = Number(request.url.searchParams.get("limit")) || 10;
@@ -15,14 +27,25 @@ class EmailTemplateController {
       page,
       limit
     );
-    apiResponse.success(response, null, result, Status.OK);
+    return apiResponse.success(response, null, result, Status.OK);
   }
 
-  public static async getById({ response, params }: RouterContext<string>) {
+  /**
+   * Retrieves an email template by its unique ID.
+   *
+   * This method fetches a single email template based on the `id` parameter from the request `params`.
+   * The resulting template is sent back as a JSON response.
+   *
+   * @param {RouterContext<string>} context - The context object containing `response` and `params`.
+   * @param {Response} context.response - The response object for sending data back to the client.
+   * @param {Record<string, string>} context.params - The route parameters, expected to contain the `id` of the email template.
+   * @returns {Promise<void>} - A Promise that sends a JSON response with the template data and status 200.
+   */
+  public static async getById({ response, params }: RouterContext<string>): Promise<void> {
     const id = params.id;
     const result = await EmailTemplateService.getEmailTemplateById(id);
     console.log(result);
-    apiResponse.success(response, null, { ...result }, Status.OK);
+    return apiResponse.success(response, null, { ...result }, Status.OK);
   }
 
   /**
@@ -71,9 +94,10 @@ class EmailTemplateController {
       subject,
       body,
       retryMax,
+      createdAt: new Date()
     });
     log.info("Created new Email template");
-    apiResponse.success(response, null, { _id: newEmailTemplate }, Status.OK);
+    return apiResponse.success(response, null, { _id: newEmailTemplate }, Status.OK);
   }
 
   /**
@@ -111,10 +135,10 @@ class EmailTemplateController {
     const { templateName, description, subject, body, retryMax } =
       await payload.value;
     const emailTemplateUpdated = await EmailTemplateService.updateEmailTemplate(
-      { _id, templateName, description, subject, body, retryMax }
+      { _id, templateName, description, subject, body, retryMax, updatedAt: new Date() }
     );
     log.info(`Update email template id: ${_id}`);
-    apiResponse.success(response, null, emailTemplateUpdated, Status.Created);
+    return apiResponse.success(response, null, emailTemplateUpdated, Status.Created);
   }
 
   /**
@@ -144,7 +168,7 @@ class EmailTemplateController {
     log.info(`Deleted email template with id: ${id}`);
 
     // Sends a success response with the deleted ID
-    apiResponse.success(response, null, { id }, Status.OK);
+    return apiResponse.success(response, null, { id }, Status.OK);
   }
 }
 

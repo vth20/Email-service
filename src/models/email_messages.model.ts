@@ -8,6 +8,7 @@ export interface EmailMessageSchema {
   subject: string;
   content: string;
   scheduledAt: Date;
+  status: string;
   attachments: Array<string>;
   createdAt?: Date;
   createdBy?: string;
@@ -15,5 +16,5 @@ export interface EmailMessageSchema {
   updatedBy?: string;
 }
 
-export const EmailTemplates =
+export const EmailMessages =
   db.getDatabase.collection<EmailMessageSchema>("email_messages");

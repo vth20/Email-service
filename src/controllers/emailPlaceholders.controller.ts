@@ -26,7 +26,7 @@ class EmailPlaceholderController {
       templateId,
       placeholderId
     );
-    apiResponse.success(response, null, result, Status.OK);
+    return apiResponse.success(response, null, result, Status.OK);
   }
 
   /**
@@ -58,7 +58,7 @@ class EmailPlaceholderController {
     const result = await EmailPlaceholderService.createEmailPlaceholders(
       payload
     );
-    apiResponse.success(response, null, result, Status.OK);
+    return apiResponse.success(response, null, result, Status.OK);
   }
 
   /**
@@ -78,7 +78,7 @@ class EmailPlaceholderController {
     const result = await EmailPlaceholderService.deleteEmailPlaceholders(
       objectIds
     );
-    apiResponse.success(response, null, { result }, Status.OK);
+    return apiResponse.success(response, null, { result }, Status.OK);
   }
 }
 
