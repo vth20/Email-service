@@ -46,10 +46,14 @@ class EmailPlaceholderController {
     const { templateId, placeholderIds } = await body.value;
     if (!placeholderIds || !placeholderIds.length)
       throw new Error("placeholderIds is empty");
-    const payload = placeholderIds.map((placeholderId: string) => ({
-      templateId,
-      placeholderId,
-    })) as EmailPlaceholderSchema[];
+    const payload = placeholderIds.map(
+      (placeholderId: string) =>
+        ({
+          templateId,
+          placeholderId,
+          createdAt: new Date(),
+        } as EmailPlaceholderSchema)
+    ) as EmailPlaceholderSchema[];
 
     const result = await EmailPlaceholderService.createEmailPlaceholders(
       payload
