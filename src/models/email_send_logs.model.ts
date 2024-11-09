@@ -13,5 +13,5 @@ export interface EmailSendLogSchema {
   updatedBy?: string;
 }
 
-export const EmailTemplates =
+export const EmailSendLogs =
   db.getDatabase.collection<EmailSendLogSchema>("email_send_logs");
