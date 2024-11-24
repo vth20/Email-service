@@ -3,5 +3,15 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": "./src/frontend",
+    "paths": {
+      "@components/*": ["src/components"],
+      "@assets/*": ["src/assets"],
+      "@types": ["src/types"],
+      "@types/*": ["src/types"],
+    },
+    "esModuleInterop": true
+  }
 }

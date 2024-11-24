@@ -7,7 +7,7 @@
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
     "dotenv/": "https://deno.land/std@0.192.0/dotenv/",
-    "config": "./src/config/config.ts",
+    "config": "./src/backend/config/config.ts",
     "mongo/": "https://deno.land/x/mongo@v0.31.2/",
     "djwt/": "https://deno.land/x/djwt@v2.9/",
     "oak/": "https://deno.land/x/oak@v12.5.0/",
@@ -21,12 +21,16 @@
     "expect/": "https://deno.land/x/expect@v0.3.0/",
     "yup": "npm:yup@^1.2.0",
     "deps": "./deps.ts",
-    "logger": "./src/logger/index.ts",
-    "router": "./src/routes/index.ts",
-    "db": "./src/database/index.ts",
-    "enum": "./src/constants/enum.ts",
-    "roles": "./src/config/roles.ts",
-    "apiResponse": "./src/utils/api/response.ts",
-    "types": "./src/types/index.ts"
+    "logger": "./src/backend/logger/index.ts",
+    "router": "./src/backend/routes/index.ts",
+    "db": "./src/backend/database/index.ts",
+    "enum": "./src/backend/constants/enum.ts",
+    "roles": "./src/backend/config/roles.ts",
+    "apiResponse": "./src/backend/utils/api/response.ts",
+    "types": "./src/backend/types/index.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": [ "dom", "deno.ns" ]
   }
 }

@@ -1,7 +1,7 @@
 import { loadSync } from "deps";
 
 const env: string = Deno.env.get("ENV") || "development";
-const envPath: string = `src/environments/.env.${env}`.toString();
+const envPath: string = `src/backend/environments/.env.${env}`.toString();
 
 loadSync({
   envPath,
