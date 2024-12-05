@@ -5,12 +5,9 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "baseUrl": "./src/frontend",
+    "baseUrl": "./src/frontend/",
     "paths": {
-      "@components/*": ["src/components"],
-      "@assets/*": ["src/assets"],
-      "@types": ["src/types"],
-      "@types/*": ["src/types"],
+      "@/*": ["./src/*"]
     },
     "esModuleInterop": true
   }
