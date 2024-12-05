@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --allow-env --allow-read --watch --inspect ./src/app.ts"
+    "dev:api": "deno run --allow-net --allow-env --allow-read --watch --inspect ./src/app.ts",
+    "dev:ng": "cd ./client && pnpm run dev"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
