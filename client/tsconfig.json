@@ -26,8 +26,8 @@
       "@lib/*": ["src/app/lib/*"],
       "@pages/*": ["src/app/pages/*"],
       "@env/*": ["src/environments/*"],
-      "@types/*": ["src/app/lib/types/*"],
-      "@interfaces/*": ["src/app/lib/interfaces/*"]
+      "@types": ["src/app/lib/types"],
+      "@interfaces": ["src/app/lib/interfaces"]
     }
   },
   "angularCompilerOptions": {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { storage } from '@lib/utils/storage/storage.utils';
 import { BehaviorSubject } from 'rxjs';
-import { PayloadLogin, AuthResponse, UserData, Token } from '@lib/types';
+import { PayloadLogin, AuthResponse, UserData, Token } from '@types';
 import { environment } from '@env/environment';
 import { HttpClient } from '@angular/common/http';
 
