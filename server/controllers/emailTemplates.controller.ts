@@ -17,7 +17,10 @@ class EmailTemplateController {
    * @param {Response} context.response - The response object for sending data back to the client.
    * @returns {Promise<void>} - A Promise that sends a JSON response with paginated results and status 200.
    */
-  public static async getAll({ request, response }: RouterContext<string>): Promise<void> {
+  public static async getAll({
+    request,
+    response,
+  }: RouterContext<string>): Promise<void> {
     const search = request.url.searchParams.get("search") || "";
     const page = Number(request.url.searchParams.get("page")) || 1;
     const limit = Number(request.url.searchParams.get("limit")) || 10;
@@ -41,7 +44,10 @@ class EmailTemplateController {
    * @param {Record<string, string>} context.params - The route parameters, expected to contain the `id` of the email template.
    * @returns {Promise<void>} - A Promise that sends a JSON response with the template data and status 200.
    */
-  public static async getById({ response, params }: RouterContext<string>): Promise<void> {
+  public static async getById({
+    response,
+    params,
+  }: RouterContext<string>): Promise<void> {
     const id = params.id;
     const result = await EmailTemplateService.getEmailTemplateById(id);
     console.log(result);
@@ -94,10 +100,16 @@ class EmailTemplateController {
       subject,
       body,
       retryMax,
-      createdAt: new Date()
+      createdAt: new Date(),
+      isDeleted: false,
     });
     log.info("Created new Email template");
-    return apiResponse.success(response, null, { _id: newEmailTemplate }, Status.OK);
+    return apiResponse.success(
+      response,
+      null,
+      { _id: newEmailTemplate },
+      Status.OK
+    );
   }
 
   /**
@@ -135,10 +147,23 @@ class EmailTemplateController {
     const { templateName, description, subject, body, retryMax } =
       await payload.value;
     const emailTemplateUpdated = await EmailTemplateService.updateEmailTemplate(
-      { _id, templateName, description, subject, body, retryMax, updatedAt: new Date() }
+      {
+        _id,
+        templateName,
+        description,
+        subject,
+        body,
+        retryMax,
+        updatedAt: new Date(),
+      }
     );
     log.info(`Update email template id: ${_id}`);
-    return apiResponse.success(response, null, emailTemplateUpdated, Status.Created);
+    return apiResponse.success(
+      response,
+      null,
+      emailTemplateUpdated,
+      Status.Created
+    );
   }
 
   /**

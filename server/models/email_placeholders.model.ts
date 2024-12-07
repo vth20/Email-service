@@ -1,4 +1,5 @@
 import db from "../database/index.ts";
+import { MetadataPlaceholderSchema } from "../models/metadata_placeholder.model.ts";
 
 export interface EmailPlaceholderSchema {
   _id?: string;
@@ -6,6 +7,7 @@ export interface EmailPlaceholderSchema {
   placeholderId: string;
   createdAt?: Date;
   createdBy?: string;
+  metadata?: MetadataPlaceholderSchema;
 }
 
 export const EmailPlaceholders =
