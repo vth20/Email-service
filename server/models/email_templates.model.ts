@@ -12,6 +12,7 @@ export interface EmailTemplateSchema {
   createdBy?: string;
   updatedAt?: Date;
   updatedBy?: string;
+  isDeleted?: boolean;
 }
 
 export const EmailTemplates =

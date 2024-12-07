@@ -32,8 +32,24 @@ services:
     depends_on:
       - mongo
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_DEFAULT_VHOST: "/"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - email-network
+
 networks:
   email-network:
     driver: bridge
 volumes:
   mongo:
+  rabbitmq-data:

@@ -1,9 +1,11 @@
 import { Bson } from "deps";
+import { EmailTemplateType } from "enum";
 import {
   EmailTemplates,
   EmailTemplateSchema,
 } from "../models/email_templates.model.ts";
 import EmailPlaceholderService from "./emailPlaceholders.service.ts";
+import type { IInUseEmailTemplate } from "types/index.ts";
 
 class EmailTemplateService {
   /**
@@ -113,6 +115,66 @@ class EmailTemplateService {
   public static deleteEmailTemplate(id: string): Promise<number> {
     EmailPlaceholderService.deleteEmailPlaceholderByTemplateIds([id]);
     return EmailTemplates.deleteOne({ _id: new Bson.ObjectId(id) });
+  }
+
+  public static async getInUseTemplateByType(
+    type: EmailTemplateType
+  ): Promise<IInUseEmailTemplate> {
+    const result = await EmailTemplates.aggregate([
+      {
+        $match: {
+          templateType: type,
+          isDeleted: false,
+        },
+      },
+      {
+        $lookup: {
+          from: "email_placeholders", // Collection for placeholders
+          localField: "_id", // EmailTemplates _id
+          foreignField: "templateId", // EmailPlaceholders.templateId
+          as: "placeholders", // Output array field
+        },
+      },
+      {
+        $unwind: {
+          path: "$placeholders", // Flatten the placeholders array
+          preserveNullAndEmptyArrays: true, // Include templates with no placeholders
+        },
+      },
+      {
+        $lookup: {
+          from: "metadata_placeholder", // Metadata collection
+          localField: "placeholders.placeholderId", // EmailPlaceholders.placeholderId
+          foreignField: "id", // MetadataPlaceholder.id
+          as: "placeholders.metadata", // Enrich placeholders with metadata
+        },
+      },
+      {
+        $unwind: {
+          path: "$placeholders.metadata", // Flatten the metadata array
+          preserveNullAndEmptyArrays: true, // Include placeholders with no metadata
+        },
+      },
+      {
+        $group: {
+          _id: "$_id", // Group by template _id
+          template: { $first: "$$ROOT" }, // Get the full template document
+          placeholders: { $push: "$placeholders" }, // Collect placeholders into an array
+        },
+      },
+      {
+        $replaceRoot: {
+          // Flatten the result for easier structure
+          newRoot: {
+            template: "$template",
+            placeholders: "$placeholders",
+          },
+        },
+      },
+    ]).toArray();
+
+    // Return the first matched template or undefined
+    return result[0] as unknown as IInUseEmailTemplate;
   }
 }
 

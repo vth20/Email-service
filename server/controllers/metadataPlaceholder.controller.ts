@@ -1,4 +1,4 @@
-import MetadataPlaceholderService from "../services/metadatPlaceholder.service.ts";
+import MetadataPlaceholderService from "../services/metadataPlaceholder.service.ts";
 import apiResponse from "../utils/api/response.ts";
 import type { RouterContext } from "deps";
 import { Status } from "deps";
