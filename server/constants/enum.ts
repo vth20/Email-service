@@ -69,3 +69,12 @@ export enum EmailTemplateType {
    */
   NEWSLETTER = "NEWS_LETTER",
 }
+
+export enum EmailMessageStatus {
+  PENDING = "PENDING",       // Email message is created but not yet sent
+  SUCCESS = "SUCCESS",       // Email message is sent successfully
+  FAILURE = "FAILURE",       // Email message sending failed
+  SCHEDULED = "SCHEDULED",   // Email message is scheduled to be sent later
+  CANCELLED = "CANCELLED",   // Email message is cancelled before sending
+  BOUNCED = "BOUNCED",       // Email message could not be delivered to the recipient
+}

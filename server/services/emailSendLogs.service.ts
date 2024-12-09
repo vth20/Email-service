@@ -4,7 +4,7 @@ import {
 } from "../models/email_send_logs.model.ts";
 import { Bson } from "deps";
 
-class EmailSendLogservice {
+class EmailSendLogService {
   /**
    * Retrieves email send log with pagination and optional search.
    * @param {string} search - Search term for filtering email send log by `templateName`, `subject`, `body`, or `description`.
@@ -66,4 +66,4 @@ class EmailSendLogservice {
   }
 }
 
-export default EmailSendLogservice;
+export default EmailSendLogService;

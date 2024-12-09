@@ -137,8 +137,8 @@ class EmailTemplateService {
       },
       {
         $unwind: {
-          path: "$placeholders", // Flatten the placeholders array
-          preserveNullAndEmptyArrays: true, // Include templates with no placeholders
+          path: "$placeholders",
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
@@ -146,29 +146,40 @@ class EmailTemplateService {
           from: "metadata_placeholder", // Metadata collection
           localField: "placeholders.placeholderId", // EmailPlaceholders.placeholderId
           foreignField: "id", // MetadataPlaceholder.id
-          as: "placeholders.metadata", // Enrich placeholders with metadata
+          as: "placeholders_metadata", // Enrich placeholders with metadata
         },
       },
       {
         $unwind: {
-          path: "$placeholders.metadata", // Flatten the metadata array
-          preserveNullAndEmptyArrays: true, // Include placeholders with no metadata
+          path: "$placeholders_metadata", // Flatten the metadata array
+          preserveNullAndEmptyArrays: true,
         },
       },
       {
         $group: {
           _id: "$_id", // Group by template _id
-          template: { $first: "$$ROOT" }, // Get the full template document
-          placeholders: { $push: "$placeholders" }, // Collect placeholders into an array
+          template: { $first: "$$ROOT" },
+          placeholders: {
+            $push: {
+              $mergeObjects: [
+                "$placeholders",
+                { metadata: "$placeholders_metadata" },
+              ],
+            },
+          },
         },
       },
       {
-        $replaceRoot: {
-          // Flatten the result for easier structure
-          newRoot: {
-            template: "$template",
-            placeholders: "$placeholders",
+        $project: {
+          _id: 0,
+          template: {
+            _id: "$template._id",
+            name: "$template.name",
+            subject: "$template.subject",
+            body: "$template.body",
+            templateType: "$template.templateType",
           },
+          placeholders: 1,
         },
       },
     ]).toArray();

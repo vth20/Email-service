@@ -7,9 +7,9 @@ export interface EmailMessageSchema {
   templateId: string;
   subject: string;
   content: string;
-  scheduledAt: Date;
+  scheduledAt: Date | null;
   status: string;
-  attachments: Array<string>;
+  attachments: Array<string> | null;
   createdAt?: Date;
   createdBy?: string;
   updatedAt?: Date;
