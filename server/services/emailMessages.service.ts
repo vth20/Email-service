@@ -3,6 +3,7 @@ import {
   EmailMessages,
   type EmailMessageSchema,
 } from "../models/email_messages.model.ts";
+import type { EmailMessageStatus } from "enum";
 
 class EmailMessageService {
   /**
@@ -52,7 +53,11 @@ class EmailMessageService {
   public static createEmailMessage(
     payload: EmailMessageSchema
   ): Promise<string | Bson.ObjectId> {
-    return EmailMessages.insertOne(payload);
+    return EmailMessages.insertOne({
+      ...payload,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
   }
 
   /**
@@ -62,6 +67,13 @@ class EmailMessageService {
    */
   public static deleteEmailMessage(id: string): Promise<number> {
     return EmailMessages.deleteOne({ _id: new Bson.ObjectId(id) });
+  }
+
+  static async updateStatus(emailMessageId: string | Bson.ObjectId, status: EmailMessageStatus) {
+    return await EmailMessages.updateOne(
+      { _id: emailMessageId },
+      { $set: { status } }
+    );
   }
 }
 

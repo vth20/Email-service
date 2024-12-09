@@ -8,7 +8,7 @@
 			"request": "launch",
 			"name": "Email service debug",
 			"type": "node",
-			"program": "${workspaceFolder}/src/app.ts",
+			"program": "${workspaceFolder}/server/app.ts",
 			"cwd": "${workspaceFolder}",
 			"env": {},
 			"runtimeExecutable": "/opt/homebrew/bin/deno",

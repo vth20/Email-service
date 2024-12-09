@@ -48,7 +48,7 @@ const config: {
   rabbitMQUrl: Deno.env.get("RABBITMQ_URI") as unknown as string,
   smtpMail: Deno.env.get("SMPT_MAIL") as unknown as string,
   smtpHost: Deno.env.get("SMTP_HOST") as unknown as string,
-  smtpPort: Deno.env.get("SMTP_PORT") as unknown as number,
+  smtpPort: Number(Deno.env.get("SMTP_PORT") as unknown as number),
   smtpUsername: Deno.env.get("SMTP_USERNAME") as unknown as string,
   smtpPassword: Deno.env.get("SMTP_PASSWORD") as unknown as string,
 };

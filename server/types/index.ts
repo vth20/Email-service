@@ -1,3 +1,4 @@
+import { Bson } from 'deps';
 import { EmailPlaceholderSchema } from "../models/email_placeholders.model.ts";
 import { EmailTemplateSchema } from "../models/email_templates.model.ts";
 export interface IPagination {
@@ -12,6 +13,8 @@ export interface IQueryEmailPlaceholder {
 }
 
 export interface ISendMail {
+  emailMessageId: string | Bson.ObjectId,
+  from: string,
   to: string;
   subject: string;
   text: string;

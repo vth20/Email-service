@@ -34,6 +34,8 @@
     "amqplib/": "https://deno.land/x/amqp@v0.23.0/",
     "denomailer/": "https://deno.land/x/denomailer@1.6.0/",
     "utils/": "./server/utils/",
-    "consumers/": "./server/queues/consumers/"
+    "consumers/": "./server/queues/consumers/",
+    "services/": "./server/services/",
+    "models/": "./server/models/"
   }
 }

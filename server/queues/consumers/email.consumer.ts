@@ -1,6 +1,7 @@
 import type { AmqpChannel } from "deps";
 import rabbitMQ from "queues";
 import { QUEUE_NAME } from "config/queues.ts";
+import emailService from "services/email.service.ts";
 
 export const startVerifyEmailConsumer = async () => {
   const channel: AmqpChannel = await rabbitMQ.instance.openChannel();
@@ -12,10 +13,19 @@ export const startVerifyEmailConsumer = async () => {
   console.log(`[Email Consumer] Waiting for messages in ${queue}...`);
 
   await channel.consume({ queue }, async (args, props, data) => {
-    console.log(JSON.stringify(args));
-    console.log(JSON.stringify(props));
-    // todo: handle send message and store history
-    console.log(new TextDecoder().decode(data));
-    await channel.ack({ deliveryTag: args.deliveryTag });
+    try {
+      if (!data) {
+        console.warn("Empty data received");
+        await channel.ack({ deliveryTag: args.deliveryTag });
+        return;
+      }
+      const payload = JSON.parse(new TextDecoder().decode(data));
+
+      await emailService.sendVerifyEmail(payload);
+      await channel.ack({ deliveryTag: args.deliveryTag });
+    } catch (error) {
+      console.error("Error processing message:", error);
+      await channel.nack({ deliveryTag: args.deliveryTag });
+    }
   });
 };
